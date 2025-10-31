@@ -7,7 +7,8 @@ function CustomerList({ customers, deleteCustomer, startEditing }) {
   const [deleting, setDeleting] = useState(null);
 
   const getTotalBalance = (customers) => {
-    return customers.reduce(
+    const safeCustomers=Array.isArray(customers)?customers:[];
+    return safeCustomers.reduce(
       (acc, customer) =>
         acc + (parseFloat(customer.outstanding_balance) || 0),
       0
