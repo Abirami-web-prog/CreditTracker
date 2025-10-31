@@ -2,10 +2,11 @@
 
 const express = require('express');
 const cors = require('cors');
-const app = express();
-app.use(cors({origin:"https://credit-tracker-brown.vercel.app"}));
+
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
+const app = express();
+app.use(cors({origin:"https://credit-tracker-brown.vercel.app"}));
 
 
 const port = process.env.PORT || 5000;
