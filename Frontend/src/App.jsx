@@ -13,7 +13,7 @@ function App() {
   const fetchCustomers = useCallback(async () => {
     try {
       setAppError(null);
-      const response = await axios.get("http://localhost:5000/api/customers");
+      const response = await axios.get("https://credittracker-backend.onrender.com");
       setCustomers(response.data);
     } catch (error) {
       const errorMsg =
@@ -31,7 +31,7 @@ function App() {
     async (customer) => {
       try {
         setAppError(null);
-        await axios.post("http://localhost:5000/api/customers", customer);
+        await axios.post("https://credittracker-backend.onrender.com", customer);
         await fetchCustomers();
         return { success: true };
       } catch (error) {
@@ -50,7 +50,7 @@ function App() {
     async (id, customer) => {
       try {
         setAppError(null);
-        await axios.put(`http://localhost:5000/api/customers/${id}`, customer);
+        await axios.put(`https://credittracker-backend.onrender.com/${id}`, customer);
         await fetchCustomers();
         setEditingCustomer(null);
         return { success: true };
@@ -70,7 +70,7 @@ function App() {
     async (id) => {
       try {
         setAppError(null);
-        await axios.delete(`http://localhost:5000/api/customers/${id}`);
+        await axios.delete(`https://credittracker-backend.onrender.com/${id}`);
         await fetchCustomers();
       } catch (error) {
         const errorMsg =
@@ -87,7 +87,7 @@ function App() {
       try {
         setAppError(null);
         await axios.post(
-          `http://localhost:5000/api/customers/${customerId}/transactions`,
+          `https://credittracker-backend.onrender.com/${customerId}/transactions`,
           transaction
         );
         await fetchCustomers();
@@ -107,7 +107,7 @@ function App() {
       try {
         setAppError(null);
         await axios.put(
-          `http://localhost:5000/api/customers/${customerId}/transactions/${transactionId}`,
+          `https://credittracker-backend.onrender.com/${customerId}/transactions/${transactionId}`,
           transaction
         );
         await fetchCustomers();
@@ -127,7 +127,7 @@ function App() {
       try {
         setAppError(null);
         await axios.delete(
-          `http://localhost:5000/api/customers/${customerId}/transactions/${transactionId}`
+          `https://credittracker-backend.onrender.com/${customerId}/transactions/${transactionId}`
         );
         await fetchCustomers();
       } catch (error) {
@@ -151,7 +151,7 @@ function App() {
       if (isObject && customerOrId.place !== undefined) {
         customer = customerOrId;
       } else {
-        const resp = await axios.get(`http://localhost:5000/api/customers/${id}`);
+        const resp = await axios.get(`https://credittracker-backend.onrender.com/${id}`);
         customer = resp.data;
       }
 
