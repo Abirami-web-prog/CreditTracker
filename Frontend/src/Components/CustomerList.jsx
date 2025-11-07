@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+mport React, { useState } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -6,17 +6,11 @@ function CustomerList({ customers, deleteCustomer, startEditing }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [deleting, setDeleting] = useState(null);
 
-  const getTotalBalance = (customers) => {
-    return customers.reduce(
-      (acc, customer) =>
-        acc + (parseFloat(customer.outstanding_balance) || 0),
-      0
-    );
-  };
+  const getTotalBalance = (customers) =>
+    customers.reduce((acc, c) => acc + (parseFloat(c.outstanding_balance) || 0), 0);
 
   const totalBalance = getTotalBalance(customers).toFixed(2);
 
-  // Defensive filter: ensure customers is array
   const filteredCustomers = Array.isArray(customers)
     ? customers.filter((customer) =>
         customer.name.toLowerCase().includes(searchTerm.toLowerCase())
