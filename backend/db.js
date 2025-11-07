@@ -1,8 +1,7 @@
-const mysql = require('mysql2/promise');
-const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '.env') });
+const mysql = require("mysql2/promise");
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, ".env") });
 
-// Create MySQL pool connection
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -13,7 +12,6 @@ const pool = mysql.createPool({
   queueLimit: 0,
 });
 
-// Check DB connectivity on startup
 (async () => {
   try {
     const connection = await pool.getConnection();
