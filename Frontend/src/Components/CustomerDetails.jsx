@@ -28,7 +28,7 @@ function CustomerDetails({
 
   const customer = customers.find((c) => c.id === parseInt(id));
 
-  // Defensive transactions array
+  // Safe transactions array for .filter() and .map()
   const transactionsSafe = Array.isArray(customer?.transactions) ? customer.transactions : [];
 
   useEffect(() => {
@@ -48,12 +48,16 @@ function CustomerDetails({
     }
   }, [successMsg]);
 
-  // ... other hooks and handlers remain unchanged ...
+  // [Your existing handlers with unchanged logic, but using transactionsSafe where needed]
+
+  const formattedBalance =
+    customer?.outstanding_balance !== undefined
+      ? parseFloat(customer.outstanding_balance).toFixed(2)
+      : "0.00";
 
   return (
     <div key={id} ref={componentRef} className="printable-content">
-      {/* ... error and success messages ... */}
-
+      {/* Error and Success Messages */}
       <Link className="back link-btn no-print" to="/">
         Back
       </Link>
@@ -61,13 +65,9 @@ function CustomerDetails({
       {!customer ? (
         <p>Customer not found</p>
       ) : isEditing ? (
-        // Edit customer form
-        // ...
-        null
+        <div>{/* Edit Customer Form */}</div>
       ) : (
-        // Customer details display
-        // ...
-        null
+        <div>{/* Display Customer Info */}</div>
       )}
 
       <h3>Transactions</h3>
@@ -86,7 +86,7 @@ function CustomerDetails({
           {transactionsSafe.length > 0 ? (
             transactionsSafe.map((t, i) => (
               <tr key={i}>
-                {/* transaction rows and editing logic */}
+                {/* Render each transaction row and edit controls */}
               </tr>
             ))
           ) : (
@@ -97,14 +97,13 @@ function CustomerDetails({
         </tbody>
       </table>
 
-      {/* Add transaction form controls */}
-
+      {/* Add Transaction Section */}
     </div>
   );
 }
 
 CustomerDetails.propTypes = {
-  // ... your original proptypes ...
+  // Prop types same as your original definitions
 };
 
 export default CustomerDetails;
