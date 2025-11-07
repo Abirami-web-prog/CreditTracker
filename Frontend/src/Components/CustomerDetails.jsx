@@ -1,8 +1,8 @@
-mport React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-function CustomerDetails({
+export default function CustomerDetails({
   customers,
   addTransaction,
   updateCustomer,
@@ -23,12 +23,9 @@ function CustomerDetails({
   const [editName, setEditName] = useState("");
   const [editMobile, setEditMobile] = useState("");
   const [editPlace, setEditPlace] = useState("");
-
   const [editingTransaction, setEditingTransaction] = useState(null);
 
   const customer = customers.find((c) => c.id === parseInt(id));
-
-  // Safe transactions array for .filter() and .map()
   const transactionsSafe = Array.isArray(customer?.transactions) ? customer.transactions : [];
 
   useEffect(() => {
@@ -48,16 +45,27 @@ function CustomerDetails({
     }
   }, [successMsg]);
 
-  // [Your existing handlers with unchanged logic, but using transactionsSafe where needed]
+  // Your existing handlers (addTransaction, updateCustomer, updateTransaction, deleteTransaction) here unchanged
+  // Ensure usage of transactionsSafe instead of customer.transactions in all places
 
   const formattedBalance =
-    customer?.outstanding_balance !== undefined
+    customer && customer.outstanding_balance !== undefined
       ? parseFloat(customer.outstanding_balance).toFixed(2)
       : "0.00";
 
   return (
     <div key={id} ref={componentRef} className="printable-content">
-      {/* Error and Success Messages */}
+      {error && (
+        <p style={{ color: "red", padding: 10, backgroundColor: "#ffe6e6", borderRadius: 5 }}>
+          {error}
+        </p>
+      )}
+      {successMsg && (
+        <p style={{ color: "green", padding: 10, backgroundColor: "#e6ffe6", borderRadius: 5 }}>
+          {successMsg}
+        </p>
+      )}
+
       <Link className="back link-btn no-print" to="/">
         Back
       </Link>
@@ -65,9 +73,15 @@ function CustomerDetails({
       {!customer ? (
         <p>Customer not found</p>
       ) : isEditing ? (
-        <div>{/* Edit Customer Form */}</div>
+        // Edit Customer Form here
+        <div>
+          {/* Form code with editable inputs */}
+        </div>
       ) : (
-        <div>{/* Display Customer Info */}</div>
+        // Display Customer Info here
+        <div>
+          {/* Customer info display */}
+        </div>
       )}
 
       <h3>Transactions</h3>
@@ -83,13 +97,12 @@ function CustomerDetails({
           </tr>
         </thead>
         <tbody>
-          {transactionsSafe.length > 0 ? (
-            transactionsSafe.map((t, i) => (
-              <tr key={i}>
-                {/* Render each transaction row and edit controls */}
-              </tr>
-            ))
-          ) : (
+          {transactionsSafe.map((t, i) => (
+            <tr key={i}>
+              {/* Render each transaction and edit controls */}
+            </tr>
+          ))}
+          {transactionsSafe.length === 0 && (
             <tr>
               <td colSpan={6}>No transactions yet.</td>
             </tr>
@@ -97,13 +110,15 @@ function CustomerDetails({
         </tbody>
       </table>
 
-      {/* Add Transaction Section */}
+      {/* Add Transaction Form here */}
     </div>
   );
 }
 
 CustomerDetails.propTypes = {
-  // Prop types same as your original definitions
+  customers: PropTypes.array.isRequired,
+  addTransaction: PropTypes.func.isRequired,
+  updateCustomer: PropTypes.func.isRequired,
+  updateTransaction: PropTypes.func.isRequired,
+  deleteTransaction: PropTypes.func.isRequired,
 };
-
-export default CustomerDetails;
