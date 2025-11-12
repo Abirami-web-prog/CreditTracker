@@ -1,15 +1,13 @@
 {
-  "name": "backend",
+  "name": "creditflow-backend",
   "version": "1.0.0",
-  "type": "commonjs",
-  "description": "",
+  "description": "CreditFlow backend API server",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon index.js"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Abirami",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
@@ -20,4 +18,3 @@
   "devDependencies": {
     "nodemon": "^3.1.10"
   }
-}
